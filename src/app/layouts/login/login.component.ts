@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy,  ChangeDetectorRef } from '@angular/core';
 import { Store, Select } from '@ngxs/store';
 import { Login } from 'src/app/store/auth.state.model';
 import { Observable, Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   data:any = {
     email: "eve.holt@reqres.in",
@@ -16,20 +16,28 @@ export class LoginComponent implements OnInit {
   }
 
   @Select(state => state) email$: Observable<any>;
+
   state:any;
   storeSub: Subscription;
 
-  constructor( private store:Store ) { }
+  constructor( private store:Store, private chr: ChangeDetectorRef ) { }
 
   ngOnInit() {
     this.storeSub = this.email$.subscribe( (state:any) => {
       this.state = {...state};
-
+      this.chr.detectChanges();
     });
   }
 
   onLogin() {
     this.store.dispatch( new Login( this.data ) )
   }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.storeSub.unsubscribe();
+  }
+
 
 }
