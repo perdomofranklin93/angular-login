@@ -23,7 +23,7 @@ import { AuthService } from './services/auth.service';
     AppRoutingModule,
     NgxsModule.forRoot([AuthState]),
     HttpClientModule,
-    //NgxsModule.forRoot({ developmentMode: true })
+    // NgxsModule.forRoot({ developmentMode: true })
   ],
   providers: [
     AuthService

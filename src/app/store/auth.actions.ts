@@ -15,7 +15,7 @@ import { NgZone } from '@angular/core';
 export class AuthState {
 
   /**
-   * 
+   *
    * Selectors
    */
 
@@ -33,6 +33,10 @@ export class AuthState {
     private ngZone: NgZone,
     private authService: AuthService, private router: Router) {}
 
+  /**
+   * Actions
+   */
+
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     return this.authService.logIn(action.payload).pipe(
@@ -40,15 +44,14 @@ export class AuthState {
         ctx.setState({
           token: result.token,
           email: action.payload.email
-        })
+        });
 
-        /** 
+        /**
          * NgZone works for asynchronous route redirection
-         * 
-        */
+         */
         this.ngZone.run( () => {
-          this.router.navigate(['/dashboard']);    
-        })
+          this.router.navigate(['/dashboard']);
+        });
       })
     );
   }
@@ -58,14 +61,14 @@ export class AuthState {
     /**
      * Clear storage reducer
      */
-    ctx.setState({ token: null, email: null })
+    ctx.setState({ token: null, email: null });
     this.authService.logOut();
 
     /**
      * Redirect to login
      */
     this.ngZone.run( () => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     });
   }
 

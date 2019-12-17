@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   @Select(state => state.email) email$: Observable<string>;
 
-  constructor( private store:Store ) { }
+  constructor( private store: Store ) { }
 
   ngOnInit() { }
 

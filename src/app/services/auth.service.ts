@@ -8,13 +8,13 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
 
-  private readonly ACCESS_TOKEN = "ACCESS_TOKEN";
-  private readonly REFRESH_TOKEN = "REFRESH_TOKEN";
-  private readonly ID_USER = "ID_USER"; 
+  private readonly ACCESS_TOKEN = 'ACCESS_TOKEN';
+  private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+  private readonly ID_USER = 'ID_USER';
 
   constructor( private httpClient: HttpClient ) { }
 
-  logIn( data: any ) : Observable<any> {
+  logIn( data: any ): Observable<any> {
     return this.httpClient.post<any>( 'https://reqres.in/api/login', data );
   }
 
@@ -27,14 +27,14 @@ export class AuthService {
    * ID User methods
    */
 
-  saveIdUser(id:string, rememberMe:boolean) {
+  saveIdUser(id: string, rememberMe: boolean) {
     if (rememberMe) {
       localStorage.setItem(this.ID_USER, id);
       localStorage.setItem(this.ID_USER, id);
-    } else {  
+    } else {
       sessionStorage.setItem(this.ID_USER, id);
       sessionStorage.setItem(this.ID_USER, id);
-    }    
+    }
   }
 
   removeIdUser() {
@@ -80,11 +80,11 @@ export class AuthService {
   /**
    * Save token
    */
-  private storeTokens(tokens, rememberMe:boolean) {
+  private storeTokens(tokens, rememberMe: boolean) {
     if (rememberMe) {
       localStorage.setItem(this.ACCESS_TOKEN, tokens.access_token);
       localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
-    } else {  
+    } else {
       sessionStorage.setItem(this.ACCESS_TOKEN, tokens.access_token);
       sessionStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
     }
