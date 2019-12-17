@@ -18,10 +18,43 @@ export class AuthService {
     return this.httpClient.post<any>( 'https://reqres.in/api/login', data );
   }
 
+  logOut() {
+    this.removeIdUser();
+    this.removeTokens();
+  }
 
-  // ===================================
-  // Tokens methods
-  // ===================================
+  /**
+   * ID User methods
+   */
+
+  saveIdUser(id:string, rememberMe:boolean) {
+    if (rememberMe) {
+      localStorage.setItem(this.ID_USER, id);
+      localStorage.setItem(this.ID_USER, id);
+    } else {  
+      sessionStorage.setItem(this.ID_USER, id);
+      sessionStorage.setItem(this.ID_USER, id);
+    }    
+  }
+
+  removeIdUser() {
+    localStorage.removeItem(this.ID_USER);
+    sessionStorage.removeItem(this.ID_USER);
+  }
+
+  /**
+   * Tokens methods
+   */
+
+  // Execute request refresh token to the back
+  refreshToken() {
+    return this.httpClient.post<any>(`auth/refresh`, {}).pipe(
+      tap(tokens => {
+        this.storeJwtToken(tokens.access_token);
+      })
+    );
+  }
+
 
   getJwtToken() {
     return localStorage.getItem(this.ACCESS_TOKEN)
@@ -35,15 +68,19 @@ export class AuthService {
       : sessionStorage.getItem(this.REFRESH_TOKEN);
   }
 
-  // Save the refreshed token
+  /**
+   * Save the refreshed token
+   */
   private storeJwtToken(jwt: string) {
     localStorage.getItem(this.ACCESS_TOKEN)
       ? localStorage.setItem(this.ACCESS_TOKEN, jwt)
       : sessionStorage.setItem(this.ACCESS_TOKEN, jwt);
   }
 
-  // Save token
-  private storeTokens(tokens, rememberMe) {
+  /**
+   * Save token
+   */
+  private storeTokens(tokens, rememberMe:boolean) {
     if (rememberMe) {
       localStorage.setItem(this.ACCESS_TOKEN, tokens.access_token);
       localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);

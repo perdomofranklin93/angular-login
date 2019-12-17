@@ -10,6 +10,7 @@ import { NgxsModule } from '@ngxs/store';
 
 import { AuthState } from './store/auth.actions';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -21,12 +22,12 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     NgxsModule.forRoot([AuthState]),
-    HttpClientModule
-    // NgxsStoragePluginModule.forRoot({
-    //   key: 'auth.token'
-    // })
+    HttpClientModule,
+    //NgxsModule.forRoot({ developmentMode: true })
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

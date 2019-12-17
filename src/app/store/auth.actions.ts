@@ -1,8 +1,9 @@
-import { AuthStateModel, Login } from './auth.state.model';
+import { AuthStateModel, Login, Logout } from './auth.state.model';
 import { Store, State, Selector, Action, StateContext } from '@ngxs/store';
 import { AuthService } from '../services/auth.service';
 import { tap } from 'rxjs/operators';
 import { Route, Router } from '@angular/router';
+import { NgZone } from '@angular/core';
 
 @State<AuthStateModel>({
   name: 'auth',
@@ -12,6 +13,12 @@ import { Route, Router } from '@angular/router';
   }
 })
 export class AuthState {
+
+  /**
+   * 
+   * Selectors
+   */
+
   @Selector()
   static token(state: AuthStateModel): string | null {
     return state.token;
@@ -22,7 +29,9 @@ export class AuthState {
     return !!state.token;
   }
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private ngZone: NgZone,
+    private authService: AuthService, private router: Router) {}
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
@@ -33,9 +42,31 @@ export class AuthState {
           email: action.payload.email
         })
 
-        this.router.navigate(['/dashboard']);
+        /** 
+         * NgZone works for asynchronous route redirection
+         * 
+        */
+        this.ngZone.run( () => {
+          this.router.navigate(['/dashboard']);    
+        })
       })
     );
+  }
+
+  @Action(Logout)
+  logout(ctx: StateContext<AuthStateModel>) {
+    /**
+     * Clear storage reducer
+     */
+    ctx.setState({ token: null, email: null })
+    this.authService.logOut();
+
+    /**
+     * Redirect to login
+     */
+    this.ngZone.run( () => {
+      this.router.navigate(['/'])
+    });
   }
 
   // @Action(Logout)

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { Logout } from 'src/app/store/auth.state.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,9 +12,12 @@ export class DashboardComponent implements OnInit {
 
   @Select(state => state.email) email$: Observable<string>;
 
-  constructor() { }
+  constructor( private store:Store ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  logOut() {
+    this.store.dispatch( new Logout() );
   }
 
 }

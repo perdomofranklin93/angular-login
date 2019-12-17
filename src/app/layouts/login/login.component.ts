@@ -29,14 +29,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogin() {
-    this.store.dispatch( new Login( this.data ) )
+  onLogin() { 
+    this.store.dispatch( new Login( this.data ) ) 
   }
-
-  ngOnDestroy(): void {
+  
+  ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.storeSub.unsubscribe();
+    if( this.storeSub ) {
+      this.storeSub.unsubscribe();
+    }
   }
 
 
