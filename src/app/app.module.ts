@@ -11,6 +11,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AuthState } from './store/auth.actions';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { AuthService } from './services/auth.service';
     AppRoutingModule,
     NgxsModule.forRoot([AuthState]),
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     // NgxsModule.forRoot({ developmentMode: true })
   ],
   providers: [

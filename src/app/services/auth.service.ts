@@ -80,13 +80,14 @@ export class AuthService {
   /**
    * Save token
    */
-  private storeTokens(tokens, rememberMe: boolean) {
+  storeTokens(tokens, rememberMe: boolean) {
     if (rememberMe) {
-      localStorage.setItem(this.ACCESS_TOKEN, tokens.access_token);
-      localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
+      console.log(rememberMe)
+      localStorage.setItem(this.ACCESS_TOKEN, tokens);
+      //localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
     } else {
-      sessionStorage.setItem(this.ACCESS_TOKEN, tokens.access_token);
-      sessionStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
+      sessionStorage.setItem(this.ACCESS_TOKEN, tokens);
+      //sessionStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
     }
   }
 

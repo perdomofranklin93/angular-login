@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { LoginComponent } from './layouts/login/login.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
+import { LoginGuard } from './guards/login.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoginGuard] },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }, 
 ];
 
+const config: ExtraOptions = {
+  useHash: true,
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

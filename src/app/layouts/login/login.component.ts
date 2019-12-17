@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy,  ChangeDetectorRef } from '@angular/core'
 import { Store, Select } from '@ngxs/store';
 import { Login } from 'src/app/store/auth.state.model';
 import { Observable, Subscription } from 'rxjs';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy {
    */
   formLogin: FormGroup;
 
-
   /**
    * Reducer auth
    */
@@ -37,6 +36,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     /**
+     * Init form
+     */
+    this.formLogin = this.formBuilder.group({
+      email: new FormControl(this.data.email, [Validators.required, Validators.required]),
+      password: new FormControl(this.data.password, [Validators.required]),
+      rememberMe: new FormControl(false, [Validators.required])
+    });
+
+    /**
      * Show the reducer values
      */
     this.storeSub = this.email$.subscribe( (state: any) => {
@@ -46,7 +54,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    this.store.dispatch( new Login( this.data ) );
+    if ( this.formLogin.valid ) {
+      this.store.dispatch( new Login( this.formLogin.value ) );
+    }
   }
 
   ngOnDestroy() {
@@ -56,6 +66,4 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.storeSub.unsubscribe();
     }
   }
-
-
 }

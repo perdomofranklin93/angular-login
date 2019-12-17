@@ -1,15 +1,16 @@
 import { AuthStateModel, Login, Logout } from './auth.state.model';
-import { Store, State, Selector, Action, StateContext } from '@ngxs/store';
+import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { AuthService } from '../services/auth.service';
 import { tap } from 'rxjs/operators';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NgZone } from '@angular/core';
 
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {
     token: null,
-    email: null
+    email: null,
+    rememberMe: null
   }
 })
 export class AuthState {
@@ -39,8 +40,12 @@ export class AuthState {
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
+
+    console.log(action);
     return this.authService.logIn(action.payload).pipe(
       tap((result: { token: string }) => {
+        
+        // Save state
         ctx.setState({
           token: result.token,
           email: action.payload.email
@@ -52,6 +57,14 @@ export class AuthState {
         this.ngZone.run( () => {
           this.router.navigate(['/dashboard']);
         });
+
+        /**
+         * Save token
+         */
+        this.authService.storeTokens( result.token, action.payload.rememberMe )
+
+        // Save ID user
+        //this.authService.saveIdUser();
       })
     );
   }
@@ -68,7 +81,7 @@ export class AuthState {
      * Redirect to login
      */
     this.ngZone.run( () => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     });
   }
 
