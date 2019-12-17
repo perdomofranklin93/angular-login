@@ -2,6 +2,7 @@ import { AuthStateModel, Login } from './auth.state.model';
 import { Store, State, Selector, Action, StateContext } from '@ngxs/store';
 import { AuthService } from '../services/auth.service';
 import { tap } from 'rxjs/operators';
+import { Route, Router } from '@angular/router';
 
 @State<AuthStateModel>({
   name: 'auth',
@@ -21,7 +22,7 @@ export class AuthState {
     return !!state.token;
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
@@ -32,11 +33,7 @@ export class AuthState {
           email: action.payload.email
         })
 
-        console.log(ctx.getState());
-
-        // ctx.patchState({
-
-        // });
+        this.router.navigate(['/dashboard']);
       })
     );
   }
