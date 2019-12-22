@@ -82,12 +82,12 @@ export class AuthService {
    */
   storeTokens(tokens, rememberMe: boolean) {
     if (rememberMe) {
-      console.log(rememberMe)
+      console.log(rememberMe);
       localStorage.setItem(this.ACCESS_TOKEN, tokens);
-      //localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
+      // localStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
     } else {
       sessionStorage.setItem(this.ACCESS_TOKEN, tokens);
-      //sessionStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
+      // sessionStorage.setItem(this.REFRESH_TOKEN, tokens.refresh_token);
     }
   }
 

@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~8.2.7",
     "@angular/router": "~8.2.7",
     "@ngxs/logger-plugin": "^3.6.0-dev.master-3ab7ed2",
+    "@ngxs/storage-plugin": "^3.6.0",
     "@ngxs/store": "^3.6.0-dev.master-3ab7ed2",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

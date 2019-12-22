@@ -41,7 +41,6 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
 
-    console.log(action);
     return this.authService.logIn(action.payload).pipe(
       tap((result: { token: string }) => {
 
@@ -51,20 +50,18 @@ export class AuthState {
           email: action.payload.email
         });
 
-        /**
-         * NgZone works for asynchronous route redirection
-         */
-        this.ngZone.run( () => {
-          this.router.navigate(['/dashboard']);
-        });
 
         /**
          * Save token
          */
-        this.authService.storeTokens( result.token, action.payload.rememberMe )
+        this.authService.storeTokens( result.token, action.payload.rememberMe );
+
+        this.ngZone.run(() => {
+          this.router.navigate(['/dashboard']);
+        });
 
         // Save ID user
-        //this.authService.saveIdUser();
+        // this.authService.saveIdUser();
       })
     );
   }
@@ -82,7 +79,7 @@ export class AuthState {
      */
     this.ngZone.run( () => {
       this.router.navigate(['/login']);
-    })
+    });
   }
 
   // @Action(Logout)

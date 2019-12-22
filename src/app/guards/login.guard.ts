@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Injectable, NgZone } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { AuthState } from '../store/auth.actions';
@@ -10,10 +10,12 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginGuard implements CanActivate {
 
-  constructor( private store: Store, private authService: AuthService) {}
+  constructor(
+    private authService: AuthService, ) { }
 
   canActivate() {
-    const isAuthenticated =  this.authService.getJwtToken() ? true : false;
+    const isAuthenticated = this.authService.getJwtToken() ? true : false;
+
     return isAuthenticated;
   }
 

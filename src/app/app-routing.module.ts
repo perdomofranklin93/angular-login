@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { LoginGuard } from './guards/login.guard';
-//import { UbicationGuard } from './guards/ubication.guard';
+// import { UbicationGuard } from './guards/ubication.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)
@@ -14,7 +14,7 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
-    path: '',
+    path: '**',
     redirectTo: 'login',
     pathMatch: 'full'
   }
@@ -22,6 +22,7 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
   useHash: true,
+  enableTracing: false,
 };
 
 @NgModule({
