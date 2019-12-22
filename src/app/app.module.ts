@@ -25,7 +25,6 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-
     // NgxsModule.forRoot({ developmentMode: true })
   ],
   providers: [
