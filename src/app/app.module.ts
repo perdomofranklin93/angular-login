@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './layouts/login/login.component';
-import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { NgxsConfig } from '@ngxs/store/src/symbols';
 import { NgxsModule } from '@ngxs/store';
 
@@ -16,8 +14,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    DashboardComponent
   ],
   imports: [
     BrowserModule,

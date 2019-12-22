@@ -44,7 +44,7 @@ export class AuthState {
     console.log(action);
     return this.authService.logIn(action.payload).pipe(
       tap((result: { token: string }) => {
-        
+
         // Save state
         ctx.setState({
           token: result.token,
@@ -82,7 +82,7 @@ export class AuthState {
      */
     this.ngZone.run( () => {
       this.router.navigate(['/login']);
-    });
+    })
   }
 
   // @Action(Logout)
