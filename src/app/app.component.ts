@@ -9,7 +9,5 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'angular-login';
 
-  constructor( private authService: AuthService ) {
-    console.log(this.authService.getJwtToken());
-  }
+  constructor() {}
 }
