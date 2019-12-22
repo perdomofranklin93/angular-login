@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { LoginGuard } from './guards/login.guard';
+import { UbicationGuard } from './guards/ubication.guard';
 // import { UbicationGuard } from './guards/ubication.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule)
+    loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule),
+    canActivate: [UbicationGuard]
   },
   {
     path: 'dashboard',

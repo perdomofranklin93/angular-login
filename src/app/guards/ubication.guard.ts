@@ -13,15 +13,14 @@ export class UbicationGuard implements CanActivate {
     private authService: AuthService ) { }
 
   canActivate(): boolean {
+    /**
+     * No show the login form is login
+     */
+    if(this.authService.getJwtToken()) {
+      this.router.navigate(['/dashboard'])
+      return false;
+    }
 
-    // const ubication = this.authService.getJwtToken() ? true : false;
-
-    // if( !ubication ) {
-    //   this.router.navigate(['/login']);
-    //   return false;
-    // }
-
-    // this.router.navigate(['/dashboard']);
     return true;
   }
 
